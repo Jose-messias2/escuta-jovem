@@ -74,6 +74,9 @@ function saveEntries(data){
 }
 
 function openScreen(id){
+    document.querySelectorAll("video").forEach(video => {
+    video.pause();
+  });
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
