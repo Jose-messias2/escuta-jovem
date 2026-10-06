@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escuta Jovem</title>
+  
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HOME -->
+
+  <section class="screen active" id="home">
+
+    <button class="settings-btn" onclick="openScreen('config')">
+      ⚙️
+    </button>
+
+    <div class="hero">
+
+      <div class="hero-text">
+
+        <p>Olá</p>
+
+        <h1>
+          Como você <br>
+          está se sentindo?
+        </h1>
+
+        <span>
+          Reconhecer suas emoções é o primeiro passo para se sentir melhor.
+        </span>
+
+        <button onclick="openScreen('diario')">
+          💜 Registrar emoção
+        </button>
+
+      </div>
+
+     <div class="hero-illustration">
+  <img src="./desenhos/abraco.png" alt="Ilustração emocional">
+</div>
+
+    </div>
+
+    <div class="home-cards">
+
+      <div class="card">
+
+        <h3>📈 Check-in emocional</h3>
+
+        <div class="line-chart"></div>
+
+        <p id="homeMood">
+          Nenhum registro hoje
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>⭐ Desafio do dia</h3>
+
+        <h2>Respire fundo</h2>
+
+        <p>
+          Pratique a técnica de respiração 4-4-6.
+        </p>
+
+        <button onclick="openScreen('desafio')">
+          Começar
+        </button>
+
+      </div>
+
+    </div>
+
+    <h2>Explore seu espaço</h2>
+
+    <div class="grid">
+
+      <button class="tile pink" onclick="openScreen('diario')">
+
+        📝
+
+        <h3>Diário</h3>
+
+        <p>Escreva e desabafe</p>
+
+      </button>
+
+      <button class="tile cyan" onclick="openScreen('relaxar')">
+
+        🎧
+
+        <h3>Relaxar</h3>
+
+        <p>Sons que acalmam</p>
+
+      </button>
+
+      <button class="tile purple" onclick="openScreen('jogos')">
+
+        🎮
+
+        <h3>Jogos</h3>
+
+        <p>Jogos relaxantes</p>
+
+      </button>
+
+      <button class="tile green-tile" onclick="openScreen('apoio')">
+
+        🎥
+
+        <h3>Espaço de apoio</h3>
+
+        <p>Vídeos e ajuda</p>
+
+      </button>
+
+    </div>
+
+    <button class="support" onclick="openScreen('sos')">
+
+      <span>🌸</span>
+
+      <div>
+
+        <h3>Fale com alguém</h3>
+
+        <p>
+          Contatos de apoio emocional
+        </p>
+
+      </div>
+
+      <b>›</b>
+
+    </button>
+
+  </section>
+
+  <!-- DIARIO -->
+
+  <section class="screen" id="diario">
+
+  <button class="back" onclick="openScreen('home')">‹</button>
+
+  <div class="diary-header-pro">
+    <div>
+      <h1>Meu diário</h1>
+      <p>Seu espaço seguro para escrever e se entender.</p>
+    </div>
+
+    <div class="streak-banner">
+
+  <span>🔥</span>
+
+  <div>
+    <strong id="streakCount">0 dias</strong>
+    <p>Você está cuidando de si mesmo 💜</p>
+  </div>
+
+</div>
+
+    <button class="new-entry-btn" onclick="tab('hoje', document.querySelector('.tabs button'))">
+      ✏️ Nova entrada
+    </button>
+  </div>
+
+  <div class="tabs diary-tabs">
+    <button class="active" onclick="tab('hoje',this)">☀️ Hoje</button>
+    <button onclick="tab('historico',this)">📖 Histórico</button>
+    <button onclick="tab('insights',this)">📊 Insights</button>
+    <button onclick="tab('cofre',this)">🔒 Cofre</button>
+  </div>
+
+  <div class="tab active" id="hoje">
+    <div class="panel">
+      <h2>Como você está se sentindo hoje?</h2>
+      <p>Não existe resposta certa. Apenas seja você.</p>
+
+      <div class="moods">
+        <button onclick="selectMood(this,'Muito feliz','😄')">😄<span>Muito feliz</span></button>
+        <button onclick="selectMood(this,'Feliz','😊')">😊<span>Feliz</span></button>
+        <button onclick="selectMood(this,'Neutro','😐')">😐<span>Neutro</span></button>
+        <button onclick="selectMood(this,'Triste','😟')">😟<span>Triste</span></button>
+        <button onclick="selectMood(this,'Muito triste','😢')">😢<span>Muito triste</span></button>
+      </div>
+
+      <h3>Emoções secundárias</h3>
+
+      <div class="chips">
+        <button onclick="toggleChip(this,'Alegria')">🌟 Alegria</button>
+        <button onclick="toggleChip(this,'Gratidão')">💗 Gratidão</button>
+        <button onclick="toggleChip(this,'Calma')">🌿 Calma</button>
+        <button onclick="toggleChip(this,'Ansiedade')">☁️ Ansiedade</button>
+        <button onclick="toggleChip(this,'Medo')">👻 Medo</button>
+        <button onclick="toggleChip(this,'Raiva')">🔥 Raiva</button>
+        <button onclick="toggleChip(this,'Tristeza')">💧 Tristeza</button>
+        <button onclick="toggleChip(this,'Solidão')">🟣 Solidão</button>
+      </div>
+
+      <h3>Título da entrada</h3>
+      <input id="diaryTitle" placeholder="Ex: Um dia mais tranquilo">
+
+      <h3>Escreva sobre seu dia</h3>
+      <textarea id="diaryText" maxlength="1000" oninput="countChars()" placeholder="O que aconteceu hoje?"></textarea>
+
+      <small id="counter">0/1000</small>
+
+      <h3>Foto da entrada</h3>
+
+<label class="diary-photo-upload">
+  📷 Adicionar foto do dia
+  <input id="diaryPhoto" type="file" accept="image/*" onchange="previewDiaryPhoto(event)">
+</label>
+
+<img id="diaryPhotoPreview" class="diary-photo-preview">
+
+      <button class="save" onclick="saveDiary()">📖 Salvar no diário</button>
+
+      <div class="msg" id="saveMsg"></div>
+    </div>
+  </div>
+
+  <div class="tab" id="historico">
+
+    <button class="toggle-diary-menu" onclick="toggleDiaryMenu()">
+☰ Ferramentas
+</button>
+
+    <div class="diary-pro-layout">
+
+      <aside class="diary-sidebar">
+
+        <div class="mini-stat-card">
+          <span>📖</span>
+          <div>
+            <small>Total de entradas</small>
+            <h2 id="diaryTotal">0</h2>
+            <p>Desde o início</p>
+          </div>
+        </div>
+
+        <div class="filter-box">
+          <h3>🔎 Filtrar por emoção</h3>
+
+          <button class="filter-option active" onclick="filterDiary('Todos', this)">💜 Todos <span id="countTodos">0</span></button>
+          <button class="filter-option" onclick="filterDiary('Muito feliz', this)">😄 Muito feliz <span id="countMuitoFeliz">0</span></button>
+          <button class="filter-option" onclick="filterDiary('Feliz', this)">😊 Feliz <span id="countFeliz">0</span></button>
+          <button class="filter-option" onclick="filterDiary('Neutro', this)">😐 Neutro <span id="countNeutro">0</span></button>
+          <button class="filter-option" onclick="filterDiary('Triste', this)">😟 Triste <span id="countTriste">0</span></button>
+          <button class="filter-option" onclick="filterDiary('Muito triste', this)">😢 Muito triste <span id="countMuitoTriste">0</span></button>
+        </div>
+
+        <div class="calendar-box">
+          <h3>📅 Calendário</h3>
+          <div id="diaryCalendar"></div>
+        </div>
+
+      </aside>
+
+      <main class="diary-history-area">
+
+        <div class="history-top">
+          <h2>Histórico de entradas</h2>
+          <input id="diarySearch" oninput="renderHistory()" placeholder="Buscar no diário...">
+        </div>
+
+        <div id="history" class="history-pro-list"></div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <div class="tab" id="insights">
+    <div class="panel">
+      <h2>Insights</h2>
+
+      <div class="insight">
+        <div class="donut">
+          <span id="totalEntries">0</span>
+          <small>registros</small>
+        </div>
+
+        <div id="stats"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab" id="cofre">
+    <div class="panel">
+      <h2>🔒 Cofre emocional</h2>
+      <p>Proteja seus desabafos com senha.</p>
+
+      <div id="vaultCreate">
+        <input id="newVaultPassword" type="password" placeholder="Crie uma senha">
+        <button class="save" onclick="createVaultPassword()">Criar senha</button>
+      </div>
+
+      <div id="vaultLoginBox">
+        <input id="vaultPassword" type="password" placeholder="Digite sua senha">
+        <button class="save" onclick="unlockVault()">Entrar no cofre</button>
+      </div>
+
+      <div id="vaultArea">
+        <input id="vaultText" placeholder="Guardar desabafo">
+        <button class="save" onclick="saveVault()">Guardar no cofre</button>
+        <div id="vaultList"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="entry-modal" id="entryModal">
+  <div class="entry-modal-card">
+
+    <button class="modal-close" onclick="closeEntryModal()">×</button>
+
+    <div id="entryDetailContent"></div>
+
+  </div>
+</div>
+
+  <!-- RESPIRAÇÃO -->
+
+  <section class="screen" id="desafio">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel center">
+
+      <div class="breath-circle" id="breathCircle">
+        ☁️
+      </div>
+
+      <h1 id="breathTitle">
+        Respire fundo
+      </h1>
+
+      <p id="breathInstruction">
+        Técnica 4-4-6: inspire, segure e expire.
+      </p>
+
+      <h2 id="breathTimer">
+        Pronto
+      </h2>
+
+      <div class="bar">
+
+        <span id="breathBar"></span>
+
+      </div>
+
+      <p id="breathCount">
+        0/3 ciclos completos
+      </p>
+
+      <button
+        class="breath-button"
+        onclick="startBreathing()"
+      >
+        🌬️ Iniciar respiração
+      </button>
+
+      <button
+        class="ghost"
+        onclick="resetBreathing()"
+      >
+        Reiniciar
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- RELAXAR -->
+
+  <section class="screen" id="relaxar">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel">
+
+      <h1>Relaxar</h1>
+
+      <p>
+        Sons que acalmam sua mente.
+      </p>
+
+      <div class="list">
+
+        <button onclick="playSound('rain')">
+
+          🌧️ Chuva suave
+
+          <span>▶</span>
+
+        </button>
+
+        <button onclick="playSound('ocean')">
+
+          🌊 Oceano
+
+          <span>▶</span>
+
+        </button>
+
+        <button onclick="playSound('forest')">
+
+          🌲 Floresta
+
+          <span>▶</span>
+
+        </button>
+
+        <button onclick="playSound('fire')">
+
+          🔥 Fogueira
+
+          <span>▶</span>
+
+        </button>
+
+      </div>
+
+      <div class="player" id="player">
+
+        Nenhum som tocando
+
+      </div>
+
+      <button
+        class="save"
+        onclick="stopSound()"
+      >
+        Parar som
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- JOGOS -->
+
+  <section class="screen" id="jogos">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel">
+
+      <h1>Jogos</h1>
+
+      <p>
+        Atividades leves para relaxar.
+      </p>
+
+      <div class="list">
+
+        <button onclick="openGame('puzzle')">
+
+          🧩 Quebra-cabeça
+
+          <span>Jogar</span>
+
+        </button>
+
+        <button onclick="openGame('memory')">
+
+          🃏 Memória
+
+          <span>Jogar</span>
+
+        </button>
+
+        <button onclick="openGame('paint')">
+
+          🎨 Colorir
+
+          <span>Jogar</span>
+
+        </button>
+
+      </div>
+
+      <div id="gameArea"></div>
+
+    </div>
+
+  </section>
+    <!-- SOS -->
+
+  <section class="screen" id="sos">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel">
+
+      <h1>SOS</h1>
+
+      <p>
+        Números importantes para pedir ajuda.
+      </p>
+
+      <a class="help-link" href="tel:188">
+        💚 CVV — 188
+      </a>
+
+      <a class="help-link" href="tel:192">
+        🚑 SAMU — 192
+      </a>
+
+      <a
+        class="help-link"
+        href="tel:+5527988858332"
+      >
+        💜 Psicóloga Sara Almeida
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- APOIO -->
+
+  <section class="screen" id="apoio">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel">
+
+      <h1>Espaço de Apoio</h1>
+
+      <p>
+        Vídeos e conteúdos de acolhimento emocional.
+      </p>
+
+      <div class="video-card">
+
+        <div class="video-info">
+
+          <span>🎥</span>
+
+          <div>
+
+            <h3>
+              Mensagem de apoio emocional da Psicóloga Sara Almeida
+            </h3>
+
+            <p>
+              Vídeo de acolhimento.
+            </p>
+
+          </div>
+
+        </div>
+
+        <video controls playsinline>
+
+          <source
+            src="./videos/IMG_7990.mp4"
+            type="video/mp4"
+          >
+
+        </video>
+
+      </div>
+
+      <div class="video-card">
+
+        <div class="video-info">
+
+          <span>🎥</span>
+
+          <div>
+
+            <h3>
+              Conversa sobre saúde mental
+            </h3>
+
+            <p>
+              Ansiedade e bem-estar.
+            </p>
+
+          </div>
+
+        </div>
+
+        <video controls playsinline>
+
+          <source
+            src="./videos/IMG_9757.mp4"
+            type="video/mp4"
+          >
+
+        </video>
+
+      </div>
+
+      <div class="faq-section">
+
+        <h2>
+          Perguntas importantes 💜
+        </h2>
+
+        <div class="faq-item">
+
+          <button
+            class="faq-question"
+            onclick="toggleFaq(this)"
+          >
+
+            O que é ansiedade?
+
+            <span>+</span>
+
+          </button>
+
+          <div class="faq-answer">
+
+            <p>
+              A ansiedade é uma reação natural do corpo diante de situações de perigo,
+              pressão ou incerteza. Ela ativa um estado de alerta que pode causar
+              sintomas físicos, como coração acelerado, falta de ar e tensão muscular,
+              além de sintomas emocionais, como preocupação excessiva, medo e dificuldade
+              para relaxar.
+            </p>
+
+            <p>
+              Em níveis moderados, a ansiedade é normal e até útil, mas quando se torna
+              intensa e frequente pode evoluir para transtornos como o Transtorno de
+              Ansiedade Generalizada.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="faq-item">
+
+          <button
+            class="faq-question"
+            onclick="toggleFaq(this)"
+          >
+
+            O que é depressão?
+
+            <span>+</span>
+
+          </button>
+
+          <div class="faq-answer">
+
+            <p>
+              A depressão é um transtorno mental que afeta o humor, os pensamentos
+              e o comportamento da pessoa.
+            </p>
+
+            <p>
+              Diferente de uma tristeza passageira, ela é mais intensa, dura por longos
+              períodos e pode interferir na vida diária, nos relacionamentos,
+              nos estudos e no trabalho.
+            </p>
+
+            <p>
+              A pessoa pode sentir desânimo constante, perda de interesse pelas coisas
+              que antes gostava, cansaço excessivo, dificuldade de concentração,
+              alterações no sono e no apetite.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="faq-item">
+
+          <button
+            class="faq-question"
+            onclick="toggleFaq(this)"
+          >
+
+            Como lidar com provas e pressão?
+
+            <span>+</span>
+
+          </button>
+
+          <div class="faq-answer">
+
+            <p>
+              Organizar os estudos em pequenas partes ajuda a diminuir a pressão.
+            </p>
+
+            <p>
+              Também é importante fazer pausas, dormir bem e lembrar que uma prova
+              não define sua inteligência nem seu valor.
+            </p>
+
+            <p>
+              Conversar com alguém de confiança também pode ajudar bastante.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="faq-item">
+
+          <button
+            class="faq-question"
+            onclick="toggleFaq(this)"
+          >
+
+            O que são técnicas de respiração?
+
+            <span>+</span>
+
+          </button>
+
+          <div class="faq-answer">
+
+            <p>
+              Técnicas de respiração ajudam a promover relaxamento e controlar
+              ansiedade e estresse.
+            </p>
+
+            <p>
+              Uma técnica bastante utilizada consiste em inspirar lentamente pelo nariz,
+              segurar o ar por alguns segundos e depois soltar devagar pela boca.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CONFIG -->
+
+  <section class="screen" id="config">
+
+    <button class="back" onclick="openScreen('home')">
+      ‹
+    </button>
+
+    <div class="panel">
+
+      <h1>Configurações</h1>
+
+      <div class="list">
+
+        <button onclick="toggleTheme()">
+
+          🌙 Alterar tema
+
+          <span>›</span>
+
+        </button>
+
+        <button onclick="toast('Notificações configuradas.')">
+
+          🔔 Notificações
+
+          <span>›</span>
+
+        </button>
+
+        <button onclick="toast('Dados protegidos.')">
+
+          🔒 Privacidade
+
+          <span>›</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MENU -->
+
+  <nav>
+
+    <button onclick="openScreen('home')">
+
+      🏠
+
+      <span>Início</span>
+
+    </button>
+
+    <button onclick="openScreen('diario')">
+
+      📖
+
+      <span>Diário</span>
+
+    </button>
+
+    <button
+      class="support-nav"
+      onclick="openScreen('apoio')"
+    >
+
+      Apoio
+
+    </button>
+
+    <button onclick="openScreen('jogos')">
+
+      🎮
+
+      <span>Jogos</span>
+
+    </button>
+
+    <button onclick="openScreen('sos')">
+
+      🆘
+
+      <span>SOS</span>
+
+    </button>
+
+  </nav>
+
+  <div id="toast"></div>
+
+</div>
+
+<script src="./js/script.js"></script>
+
+</body>
+
+</html>
