@@ -1364,3 +1364,22 @@ document.addEventListener("play", function(event) {
     });
   }
 }, true);
+document.querySelectorAll(".screen").forEach(screen => {
+  const observer = new MutationObserver(() => {
+
+    if (
+      screen.id === "apoio" &&
+      !screen.classList.contains("active")
+    ) {
+      screen.querySelectorAll("video").forEach(video => {
+        video.pause();
+      });
+    }
+
+  });
+
+  observer.observe(screen, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+});
